@@ -7,7 +7,7 @@ var tableName = "burgers";
 
 var orm = {
 
-  allBurgers: function(callback) {
+  selectAll: function(callback) {
     var s = "SELECT * FROM " + tableName;
 
     connection.query(s, function(err, result) {
