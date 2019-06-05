@@ -1,20 +1,15 @@
-var connection = require("./connection.js");
-
-// ORM
-// =============================================================
-
-var tableName = "burgers";
+var connection = require("../config/connection.js");
 
 var orm = {
-
-  selectAll: function(callback) {
-    var s = "SELECT * FROM " + tableName;
-
-    connection.query(s, function(err, result) {
-      callback(result);
+  selectAll: function(tableInput, cb) {
+    var queryString = "SELECT * FROM " + tableInput + ";";
+    connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
     });
   },
-
   insertOne: function(burger, callback) {
     var s = "INSERT INTO " + tableName + " (burger_name, devoured) VALUES (?,?)";
     burger.devoured = burger.devoured || 0;
@@ -26,7 +21,6 @@ var orm = {
 
     });
   },
-
   updateOne: function(burger, callback) {
     var s = "UPDATE " + tableName + " SET burger_name=? WHERE id=?";
 
