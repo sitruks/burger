@@ -1,37 +1,23 @@
 var orm = require("../config/orm.js");
 
-// Routes
-// =============================================================
-
-module.exports = function(app) {
-
-    // Search for Specific Character (or all burgers) then provides JSON
-    app.get("/api/:burgers", function(req, res) {
-  
-        orm.selectAll(function(data) {
-            res.json(data);
-          });
-    });
-  
-    // If a user sends data to add a new character...
-    app.post("/api/new", function(req, res) {
-  
-      var burger = req.body;
-  
-      orm.insertOne(burger, function(data) {
-        console.log(data);
+var burger = {
+    selectAll: function(cb) {
+      orm.selectAll("burgers", function(res) {
+        cb(res);
       });
-  
-    });
-  
-    // If a user sends data to add a new character...
-    app.put("/api/new", function(req, res) {
-  
-      var burger = req.body;
-  
-      orm.updateOne(burger, function(data) {
-        console.log(data);
+    },
+    // The variables cols and vals are arrays.
+    insertOne: function(cols, vals, cb) {
+      orm.insertOne("burgers", cols, vals, function(res) {
+        cb(res);
       });
-  
-    });
+    },
+    updateOne: function(objColVals, condition, cb) {
+      orm.updateOne("burgers", objColVals, condition, function(res) {
+        cb(res);
+      });
+    }
   };
+  
+  // Export the database functions for the controller (burgers_Controller.js).
+  module.exports = burger;
