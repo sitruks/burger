@@ -6,10 +6,6 @@ var burger = require("../models/burger.js");
 // Create an instance of the express app.
 var app = express();
 
-orm.selectAll(function(data) {
-    res.json(data);
-  });
-
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
     cat.selectAll(function(data) {
